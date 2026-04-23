@@ -1,9 +1,9 @@
 {
     "name": {
-        "ar": "رائد",
-        "en": "Theme Raed"
+        "ar": "تجربة",
+        "en": "TEST"
     },
-    "repository": "https://github.com/SallaApp/theme-raed",
+    "repository": "https://github.com/RGT-Z/theme-moseb",
     "author_email": "support@salla.sa",
     "features": [
         "mega-menu",
