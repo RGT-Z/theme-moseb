@@ -1,9 +1,9 @@
 {
     "name": {
-        "ar": "رائد",
-        "en": "Theme Raed"
+        "ar": "عالمك الرقمي",
+        "en": "Digital World"
     },
-    "repository": "https://github.com/SallaApp/theme-raed",
+    "repository": "https://github.com/RGT-Z/theme-moseb",
     "author_email": "support@salla.sa",
     "features": [
         "mega-menu",
@@ -416,9 +416,9 @@
                             "links.url__type": "offers_link"
                         },
                         {
-                          "links.icon": "sicon-bed-single",
-                          "links.title": "غرف النوم",
-                          "links.url__type": "offers_link"
+                            "links.icon": "sicon-bed-single",
+                            "links.title": "غرف النوم",
+                            "links.url__type": "offers_link"
                         },
                         {
                             "links.icon": "sicon-heart",
@@ -690,36 +690,36 @@
                     "label": "قائمة الصور",
                     "item_label": "صورة ",
                     "value": [
-                      {
-                        "banners.image": "https://cdn.salla.sa/mQgZlG/pzOCEw10wCfXeVSpKnL0Ifd1O9ZkTfnZ17RkE14R.jpg",
-                        "banners.url": "",
-                        "banners.title": "تصفَّح حسب التصنيف",
-                        "banners.description": "سهِّل تجربة التسوُّق والوصول لمنتجاتك"
-                      },
-                      {
-                        "banners.image": "https://cdn.salla.sa/mQgZlG/lkyDjYwvWJNmAQoGnLALLcUkm66rCCDbTyVlSGdH.jpg",
-                        "banners.url": "",
-                        "banners.title": "تصفَّح حسب التصنيف",
-                        "banners.description": "سهِّل تجربة التسوُّق والوصول لمنتجاتك"
-                      },
-                      {
-                        "banners.image": "https://cdn.salla.sa/mQgZlG/lkyDjYwvWJNmAQoGnLALLcUkm66rCCDbTyVlSGdH.jpg",
-                        "banners.url": "",
-                        "banners.title": "تصفَّح حسب التصنيف",
-                        "banners.description": "سهِّل تجربة التسوُّق والوصول لمنتجاتك"
-                      },
-                      {
-                        "banners.image": "https://cdn.salla.sa/mQgZlG/lkyDjYwvWJNmAQoGnLALLcUkm66rCCDbTyVlSGdH.jpg",
-                        "banners.url": "",
-                        "banners.title": "تصفَّح حسب التصنيف",
-                        "banners.description": "سهِّل تجربة التسوُّق والوصول لمنتجاتك"
-                      },
-                      {
-                        "banners.image": "https://cdn.salla.sa/mQgZlG/lkyDjYwvWJNmAQoGnLALLcUkm66rCCDbTyVlSGdH.jpg",
-                        "banners.url": "",
-                        "banners.title": "تصفَّح حسب التصنيف",
-                        "banners.description": "سهِّل تجربة التسوُّق والوصول لمنتجاتك"
-                      }
+                        {
+                            "banners.image": "https://cdn.salla.sa/mQgZlG/pzOCEw10wCfXeVSpKnL0Ifd1O9ZkTfnZ17RkE14R.jpg",
+                            "banners.url": "",
+                            "banners.title": "تصفَّح حسب التصنيف",
+                            "banners.description": "سهِّل تجربة التسوُّق والوصول لمنتجاتك"
+                        },
+                        {
+                            "banners.image": "https://cdn.salla.sa/mQgZlG/lkyDjYwvWJNmAQoGnLALLcUkm66rCCDbTyVlSGdH.jpg",
+                            "banners.url": "",
+                            "banners.title": "تصفَّح حسب التصنيف",
+                            "banners.description": "سهِّل تجربة التسوُّق والوصول لمنتجاتك"
+                        },
+                        {
+                            "banners.image": "https://cdn.salla.sa/mQgZlG/lkyDjYwvWJNmAQoGnLALLcUkm66rCCDbTyVlSGdH.jpg",
+                            "banners.url": "",
+                            "banners.title": "تصفَّح حسب التصنيف",
+                            "banners.description": "سهِّل تجربة التسوُّق والوصول لمنتجاتك"
+                        },
+                        {
+                            "banners.image": "https://cdn.salla.sa/mQgZlG/lkyDjYwvWJNmAQoGnLALLcUkm66rCCDbTyVlSGdH.jpg",
+                            "banners.url": "",
+                            "banners.title": "تصفَّح حسب التصنيف",
+                            "banners.description": "سهِّل تجربة التسوُّق والوصول لمنتجاتك"
+                        },
+                        {
+                            "banners.image": "https://cdn.salla.sa/mQgZlG/lkyDjYwvWJNmAQoGnLALLcUkm66rCCDbTyVlSGdH.jpg",
+                            "banners.url": "",
+                            "banners.title": "تصفَّح حسب التصنيف",
+                            "banners.description": "سهِّل تجربة التسوُّق والوصول لمنتجاتك"
+                        }
                     ],
                     "fields": [
                         {
