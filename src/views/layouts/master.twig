@@ -1,123 +1,173 @@
-{# ############## Shared Variables in all views ################
-| Variable                                           | Type     | Description                                                                                              |
-|----------------------------------------------------|----------|----------------------------------------------------------------------------------------------------------|
-| store                                              | Store    |                                                                                                          |
-| store.id                                           | int      |                                                                                                          |
-| store.name                                         | string   |                                                                                                          |
-| store.username                                     | string   |                                                                                                          |
-| store.description                                  | string   |                                                                                                          |
-| store.slogan                                       | ?string  | * if feature in twilight.json                                                                            |
-| store.logo                                         | string   |                                                                                                          |
-| store.url                                          | string   |                                                                                                          |
-| store.api                                          | string   | the api url for current store                                                                            |
-| store.icon                                         | string   | *fav icon url                                                                                            |
-| store.contacts                                     | object   | [mobile, phone, email, whatsapp, telegram], ex. store.contacts.email                                     |
-| store.social                                       | object   | [instagram, snapchat, twitter, youtube, facebook, pinterest, maroof, whatsapp], ex. store.social.twitter |
-| store.settings                                     | object   |                                                                                                          |
-| store.settings.auth.email_allowed                  | bool     |                                                                                                          |
-| store.settings.auth.mobile_allowed                 | bool     |                                                                                                          |
-| store.settings.auth.is_email_required              | bool     |                                                                                                          |
-| store.settings.cart.apply_coupon_enabled           | bool     | Does visitor allowed to applay coupon in cart page                                                       |
-| store.settings.product.total_sold_enabled          | bool     |                                                                                                          |
-| store.settings.product.fit_type                    | ?string  | null when equal product card size is off, or ['cover', 'contain']                                        |
-| store.settings.category.testimonial_enabled        | bool     | Show random testimonials in category page                                                                |
-| store.settings.tax.number                          | ?string  |                                                                                                          |
-| store.settings.tax.certificate                     | ?string  | certificate image url                                                                                    |
-| store.settings.tax.taxable_prices_enabled          | bool     | Does tax included in the prices ex product_price 100 & tax is 15, price will be 115                      |
-| store.settings.rating_enabled                      | bool     | Is one of: store_enabled or shipping_enabled or products_enabled                                         |
-| store.settings.arabic_numbers_enabled              | bool     | Does the merchant wants the numbers to be shown as Arabic format                                         |
-| store.settings.is_multilingual                     | bool     |                                                                                                          |
-| store.settings.currencies_enabled                  | bool     |     
-| theme                                              | Theme    |                                                                                                          |
-| theme.id                                           | int      |                                                                                                          |
-| theme.name                                         | string   |                                                                                                          |
-| theme.mode                                         | string   | `live`, `preview`                                                                                        |
-| theme.is_rtl                                       | bool     |                                                                                                          |
-| theme.translations_hash                            | int      | to be used in case merchant updated frontend store translations                                          |
-| theme.color                                        | object   |                                                                                                          |
-| theme.color.primary                                | string   |                                                                                                          |
-| theme.color.text                                   | string   | suitable text color comparing to `theme.primary.color`, #000000, #FFFFFF                                 |
-| theme.color.reverse_primary                        | string   |                                                                                                          |
-| theme.color.reverse_text                           | string   | if `theme.text_color=#000000` means that `theme.reverse_text_color=#FFFFFF`                              |
-| theme.color.is_dark                                | bool     | Does main store color `theme.primary.color` considered as dim color?                                     |
-| theme.color.darker(float alpha, ?string hexColor)  | string   | get darker color from `theme.primary.color` or from passed color, `alpha` range from 0.0-1.0             |
-| theme.color.lighter(float alpha, ?string hexColor) | string   | get lighter color from `theme.primary.color` or from passed color, `alpha` range from 0.0-1.0            |
-| theme.font                                         | ?object  | Salla predefined font, null when the theme doesn't have `fonts` feature                                  |
-| theme.font.name                                    | string   | DINNextLTArabic-Regular, Amazon-Ember, Apple, Dubai, Estedad                                             |
-| theme.font.url                                     | string   | css full url ex: 'https://my_store.test/dist/fonts/default.css'                                          |
-| theme.settings                                     | object   | dynamic object with values of the `settings` in twilight.json ex. `theme.settings.topnav_is_dark`        |
-| theme.settings.set(settingName, value)             | string   | set global var, then get it {{theme.settings.get('my_var','fallback') }}                                 |
-| theme.settings.get(settingName, default=null)      | mixed    | get theme setting ex `theme.settings.get('my_var', 'fallback')`                                          |
-#}
 <!DOCTYPE html>
-<html lang="{{ user.language.code }}" dir="{{ user.language.dir }}">
-<!-- بسم الله الرحمن الرحيم -->
+<html lang="{{ app.locale|default('ar') }}" dir="{{ app.locale|default('ar') == 'ar' ? 'rtl' : 'ltr' }}">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {{ theme.settings.set('placeholder', 'images/placeholder.png') }}
-
-    {% include 'pages.partials.loading-screen-assets' %}
-
-    <script defer data-cfasync="false" src="{{ 'product-card.js'|asset }}"></script>
-    <script defer src="{{ 'main-menu.js'|asset }}"></script>
-
-    {% block head_scripts %}{% endblock %}
-
-
-    <script data-cfasync="false">
-        window.header_is_sticky = "{{theme.settings.get('header_is_sticky', 'Default Value')}}"
-        window.imageZoom = "{{theme.settings.get('imageZoom')}}"
-        window.can_access_wallet = {{ user.can_access_wallet | json_encode }}
-    </script>
-    
-    {% hook 'head:start' %}
-    {% hook head %}
-    {% block styles %}{% endblock %}
-    <link rel="stylesheet" href="{{ 'app.css' | asset }}">
-    <link rel="stylesheet" href="{{ theme.font.path|cdn }}"/>
-    <link rel="stylesheet" href="{{ 'fonts/sallaicons.css'|cdn }}"/>
-    
-    <style>
-        :root {
-            --font-main: '{{theme.font.name}}';
-            --color-primary: {{ theme.color.primary }};
-            --color-primary-dark: {{ theme.color.darker(0.15) }};
-            --color-primary-light: {{ theme.color.lighter(0.15) }};
-            --color-primary-reverse: {{ theme.color.reverse_text }};
-        }
-    </style>
-    {# tracking services, custom css feature. #}
-    {% hook 'head:end' %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page.title|default(store.name|default('RGT Digital')) }}</title>
+  {% hook 'head:start' %}
+  {% hook 'head' %}
+  <style>
+    :root {
+      --primary: {{ theme.settings.get('brand_primary')|default('#0a1f44') }};
+      --secondary: {{ theme.settings.get('brand_secondary')|default('#2d9cdb') }};
+      --accent: {{ theme.settings.get('brand_accent')|default('#27ae60') }};
+      --surface: #ffffff;
+      --surface-2: #f5f8fc;
+      --text: #0f172a;
+      --muted: #5b6b84;
+      --line: #dbe5f0;
+      --shadow: 0 18px 50px rgba(10,31,68,.10);
+      --radius: 20px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Tahoma, Arial, sans-serif;
+      background: linear-gradient(180deg, #f7fbff 0%, #eff5fb 100%);
+      color: var(--text);
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(1180px, calc(100% - 32px)); margin-inline: auto; }
+    .topbar {
+      position: sticky; top: 0; z-index: 10;
+      backdrop-filter: blur(14px);
+      background: rgba(255,255,255,.82);
+      border-bottom: 1px solid rgba(219,229,240,.8);
+    }
+    .topbar-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      min-height: 76px; gap: 16px;
+    }
+    .brand {
+      display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 1.1rem;
+    }
+    .brand-badge {
+      width: 42px; height: 42px; border-radius: 14px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #fff; display: grid; place-items: center; box-shadow: var(--shadow);
+      font-weight: 900;
+    }
+    .nav { display: flex; gap: 14px; flex-wrap: wrap; }
+    .nav a {
+      padding: 10px 14px; border-radius: 999px; color: var(--muted); font-weight: 700;
+    }
+    .nav a:hover { background: var(--surface-2); color: var(--primary); }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      padding: 14px 22px; border-radius: 14px; font-weight: 800; border: none; cursor: pointer;
+      transition: .2s ease; box-shadow: var(--shadow);
+    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-secondary { background: #fff; color: var(--primary); border: 1px solid var(--line); box-shadow: none; }
+    .btn:hover { transform: translateY(-1px); }
+    .hero {
+      padding: 48px 0 26px;
+    }
+    .hero-card {
+      display: grid; grid-template-columns: 1.1fr .9fr; gap: 22px; align-items: stretch;
+      background: linear-gradient(135deg, rgba(10,31,68,.98), rgba(45,156,219,.92));
+      border-radius: 28px; overflow: hidden; color: #fff; box-shadow: var(--shadow);
+    }
+    .hero-copy { padding: 42px; }
+    .hero-kicker {
+      display: inline-flex; padding: 8px 12px; border-radius: 999px; background: rgba(255,255,255,.12); font-size: .92rem;
+      margin-bottom: 14px;
+    }
+    .hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.1; margin: 0 0 14px; }
+    .hero p { color: rgba(255,255,255,.88); font-size: 1.05rem; line-height: 1.9; margin: 0 0 24px; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .hero-panel {
+      padding: 28px; display: grid; gap: 14px; align-content: center;
+      background: rgba(255,255,255,.06);
+    }
+    .mini-card {
+      background: rgba(255,255,255,.10); border: 1px solid rgba(255,255,255,.12); border-radius: 18px; padding: 18px;
+    }
+    .mini-card strong { display: block; margin-bottom: 6px; }
+    section { padding: 18px 0 24px; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .section-head h2 { margin: 0; font-size: 1.6rem; }
+    .section-head p { margin: 6px 0 0; color: var(--muted); }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 18px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 18px; }
+    .card {
+      background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow);
+    }
+    .category-icon {
+      width: 54px; height: 54px; border-radius: 18px; display: grid; place-items: center; font-size: 1.4rem;
+      background: linear-gradient(135deg, rgba(45,156,219,.12), rgba(39,174,96,.12)); color: var(--primary); margin-bottom: 14px;
+    }
+    .card h3 { margin: 0 0 8px; font-size: 1.12rem; }
+    .card p { margin: 0; color: var(--muted); line-height: 1.8; }
+    .product-card { display: flex; flex-direction: column; gap: 12px; }
+    .product-top { display: flex; justify-content: space-between; align-items: start; gap: 12px; }
+    .tag {
+      background: rgba(39,174,96,.12); color: #13713d; border-radius: 999px; padding: 7px 10px; font-size: .85rem; font-weight: 800;
+    }
+    .price { font-size: 1.4rem; font-weight: 900; color: var(--primary); }
+    .old-price { color: #94a3b8; text-decoration: line-through; font-size: .95rem; }
+    .features { display: grid; gap: 8px; padding: 0; margin: 0; list-style: none; color: var(--muted); }
+    .features li::before { content: '✓'; color: var(--accent); margin-inline-end: 8px; font-weight: 900; }
+    .trust {
+      display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 18px;
+    }
+    .trust .card { text-align: center; }
+    .trust strong { display: block; margin: 12px 0 6px; font-size: 1.05rem; }
+    .footer {
+      padding: 28px 0 46px; color: var(--muted);
+    }
+    .footer-box {
+      background: #0f172a; color: #e2e8f0; border-radius: 24px; padding: 24px;
+      display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    }
+    .footer-box p { margin: 0; color: #cbd5e1; }
+    .small-note { color: var(--muted); font-size: .95rem; }
+    .page-shell { padding: 34px 0 46px; }
+    .page-card { background: #fff; border: 1px solid var(--line); border-radius: 28px; padding: 28px; box-shadow: var(--shadow); }
+    .split { display: grid; grid-template-columns: 1fr 420px; gap: 22px; }
+    .placeholder-box { border: 2px dashed var(--line); border-radius: 20px; min-height: 300px; display: grid; place-items: center; background: var(--surface-2); color: var(--muted); }
+    .notice { padding: 16px 18px; border-radius: 16px; background: #ecfdf5; color: #166534; font-weight: 700; }
+    @media (max-width: 960px) {
+      .hero-card, .grid-4, .grid-3, .trust, .split { grid-template-columns: 1fr; }
+      .nav { display: none; }
+      .hero-copy, .hero-panel, .page-card { padding: 22px; }
+    }
+  </style>
+  {% block head %}{% endblock %}
+  {% hook 'head:end' %}
 </head>
-<body id="app" class="overflow-x-hidden {% hook 'body:classes' %}
-  {{ theme.settings.get('footer_is_dark') ? ' footer-is-dark' : ' footer-is-light' }}
-  {{ theme.settings.get('topnav_is_dark') ? ' topnav-is-dark' : '' }}
-  {{ theme.settings.get('sticky_add_to_cart') ? ' is-sticky-product-bar' : '' }}
-  ">
-  <div class="loader-init"></div>
-<noscript>
-    To get full functionality of this site you need to enable JavaScript. Here is how
-    <a href="https://www.enable-javascript.com/" rel="noreferrer"
-       target="_blank">To enable JavaScript on webpage</a>.
-</noscript>
-<div class="app-inner flex flex-col min-h-full">
-    {% hook 'body:start' %}
-    {% component 'header.header' %}
-    {% block content %}{% endblock %}
-    {% component 'footer.footer' %}
-</div>
-{% hook 'body:end' %}
-<script defer src="{{ 'app.js' | asset }}"></script>
-
-{# Twilight Components #}
-<salla-offer-modal></salla-offer-modal>
-<salla-search></salla-search>
-
-{% if user.type=='guest' %}
-    <salla-login-modal></salla-login-modal>
-{% endif %}
-{% block scripts %}{% endblock %}
+<body>
+  {% hook 'body:start' %}
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="/">
+        <span class="brand-badge">R</span>
+        <span>{{ store.name|default('RGT Digital') }}</span>
+      </a>
+      <nav class="nav">
+        <a href="/">الرئيسية</a>
+        <a href="/products">المنتجات</a>
+        <a href="/pages/subscriptions">الاشتراكات</a>
+        <a href="/pages/sawa">باقات سوا</a>
+        <a href="/cart">السلة</a>
+      </nav>
+      <a class="btn btn-secondary" href="{{ theme.settings.get('whatsapp_link')|default('#') }}">واتساب</a>
+    </div>
+  </header>
+  {% block content %}{% endblock %}
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-box">
+        <div>
+          <strong>{{ store.name|default('RGT Digital') }}</strong>
+          <p>متجر رقمي مخصص للاشتراكات والمنتجات الرقمية وبطاقات سوا.</p>
+        </div>
+        <div class="small-note">تم بناء هذا القالب كبداية قابلة للتخصيص داخل Twilight.</div>
+      </div>
+    </div>
+  </footer>
+  {% hook 'body:end' %}
+  {% block scripts %}{% endblock %}
 </body>
 </html>

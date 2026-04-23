@@ -1,13 +1,166 @@
-{#
-| Variable         | Type       | Description                                                         |
-|------------------|------------|---------------------------------------------------------------------|
-| page             | object     |                                                                     |
-| page.title       | string     | *could be html                                                      |
-| page.slug        | string     | ex: "cat.show"                                                      |
-#}
 {% extends "layouts.master" %}
 
 {% block content %}
-    {# التعديل الضروري: إضافة .build والـ quotes #}
-    {% component 'home.build' %}
+<section class="hero">
+  <div class="container">
+    <div class="hero-card">
+      <div class="hero-copy">
+        <span class="hero-kicker">متجر اشتراكات ومنتجات رقمية</span>
+        <h1>{{ theme.settings.get('hero_title')|default('اشحن واشتري خدماتك الرقمية بثواني') }}</h1>
+        <p>{{ theme.settings.get('hero_subtitle')|default('متجر مخصص للاشتراكات والمنتجات الرقمية وبطاقات سوا مع تجربة شراء واضحة وسريعة.') }}</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="/products">{{ theme.settings.get('cta_primary')|default('تصفح المنتجات') }}</a>
+          <a class="btn btn-secondary" href="/pages/sawa">{{ theme.settings.get('cta_secondary')|default('باقات سوا') }}</a>
+        </div>
+      </div>
+      <div class="hero-panel">
+        <div class="mini-card">
+          <strong>تسليم فوري</strong>
+          <span>أكواد واشتراكات جاهزة خلال لحظات بعد الدفع.</span>
+        </div>
+        <div class="mini-card">
+          <strong>واجهة شراء سريعة</strong>
+          <span>تصميم بسيط يركز على التحويل والثقة والوضوح.</span>
+        </div>
+        <div class="mini-card">
+          <strong>مناسب للجوال</strong>
+          <span>تجربة مرتبة ومتجاوبة لمتاجر الخدمات الرقمية.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2>الأقسام الرئيسية</h2>
+        <p>ثلاث فئات واضحة تساعد الزائر يصل للشراء بسرعة.</p>
+      </div>
+    </div>
+    <div class="grid-3">
+      <article class="card">
+        <div class="category-icon">📱</div>
+        <h3>باقات سوا</h3>
+        <p>بطاقات شحن مباشرة مع وصف قصير وخيار شراء واضح.</p>
+      </article>
+      <article class="card">
+        <div class="category-icon">🔐</div>
+        <h3>اشتراكات</h3>
+        <p>Netflix وShahid واشتراكات رقمية أخرى بطريقة عرض مرتبة.</p>
+      </article>
+      <article class="card">
+        <div class="category-icon">💻</div>
+        <h3>منتجات رقمية</h3>
+        <p>أكواد وتراخيص وخدمات جاهزة للتسليم الفوري.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2>منتجات مميزة</h2>
+        <p>نموذج بصري لعرض منتجاتك الأكثر طلبًا.</p>
+      </div>
+    </div>
+    <div class="grid-4">
+      <article class="card product-card">
+        <div class="product-top">
+          <div>
+            <h3>بطاقة سوا 50</h3>
+            <div class="small-note">شحن فوري بعد الدفع</div>
+          </div>
+          <span class="tag">سريع</span>
+        </div>
+        <div><span class="price">50 ر.س</span> <span class="old-price">56 ر.س</span></div>
+        <ul class="features">
+          <li>تسليم مباشر</li>
+          <li>مناسب للاستخدام الشخصي</li>
+          <li>خطوات شراء واضحة</li>
+        </ul>
+        <a class="btn btn-primary" href="/product/sample-sawa-50">شراء الآن</a>
+      </article>
+      <article class="card product-card">
+        <div class="product-top">
+          <div>
+            <h3>Netflix شهر</h3>
+            <div class="small-note">حساب أو كود حسب الباقة</div>
+          </div>
+          <span class="tag">اشتراك</span>
+        </div>
+        <div><span class="price">29 ر.س</span> <span class="old-price">35 ر.س</span></div>
+        <ul class="features">
+          <li>تفعيل سريع</li>
+          <li>تفاصيل مختصرة وواضحة</li>
+          <li>مناسب للجوال</li>
+        </ul>
+        <a class="btn btn-primary" href="/product/sample-netflix">شراء الآن</a>
+      </article>
+      <article class="card product-card">
+        <div class="product-top">
+          <div>
+            <h3>Shahid VIP</h3>
+            <div class="small-note">اشتراك رقمي جاهز</div>
+          </div>
+          <span class="tag">الأكثر طلبًا</span>
+        </div>
+        <div><span class="price">39 ر.س</span> <span class="old-price">45 ر.س</span></div>
+        <ul class="features">
+          <li>تنسيق مناسب للثقة</li>
+          <li>أزرار شراء بارزة</li>
+          <li>بطاقات مرتبة</li>
+        </ul>
+        <a class="btn btn-primary" href="/product/sample-shahid">شراء الآن</a>
+      </article>
+      <article class="card product-card">
+        <div class="product-top">
+          <div>
+            <h3>Windows Key</h3>
+            <div class="small-note">منتج رقمي فوري</div>
+          </div>
+          <span class="tag">رقمي</span>
+        </div>
+        <div><span class="price">65 ر.س</span> <span class="old-price">79 ر.س</span></div>
+        <ul class="features">
+          <li>تسليم بالكود</li>
+          <li>واجهة نظيفة</li>
+          <li>متوافق مع الجوال</li>
+        </ul>
+        <a class="btn btn-primary" href="/product/sample-windows">شراء الآن</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2>لماذا هذا التصميم مناسب؟</h2>
+        <p>لأنه يبني الثقة ويوضح المنتجات ويقلل التشتيت.</p>
+      </div>
+    </div>
+    <div class="trust">
+      <article class="card">
+        <div class="category-icon">⚡</div>
+        <strong>تسليم فوري</strong>
+        <p>رسالة واضحة تشرح سرعة التنفيذ وتطمئن العميل.</p>
+      </article>
+      <article class="card">
+        <div class="category-icon">💳</div>
+        <strong>شراء مباشر</strong>
+        <p>زر الشراء ظاهر وواضح في الصفحة الرئيسية وصفحة المنتج.</p>
+      </article>
+      <article class="card">
+        <div class="category-icon">💬</div>
+        <strong>دعم سريع</strong>
+        <p>ربط سريع بواتساب أو قناة دعم لتقليل التردد قبل الشراء.</p>
+      </article>
+    </div>
+  </div>
+</section>
 {% endblock %}
